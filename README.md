@@ -1,1 +1,1 @@
-# OCR-Vietnamese-
+# OCR-Vietnamese + PaddleOCR Multilingual
