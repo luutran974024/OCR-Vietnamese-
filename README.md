@@ -1,39 +1,70 @@
-# CINNAMON AI MARATHON
-# Giới thiệu
-Cinnamon AI Marathon là một giải đấu kết hợp với lộ trình huấn luyện đầy thử thách hướng tới các "vận động viên" mang khát vọng chinh phục những bài toán thực tế trong lĩnh vực Trí Tuệ Nhân Tạo. Đặc biệt, Cinnamon AI Marathon 2018 MỞ RỘNG cho cả các tài năng nằm ngoài lãnh thổ Việt Nam.
-Trong cuộc thi này gồm 3 challenges:
-- [Handwriting OCR for Vietnamese Address](https://goo.gl/PHJCit)
-- [Document Layout Analysis](https://goo.gl/wHi5DK)
-- [Real Time Facial LandMark Detection](https://goo.gl/gcp77y)
+[English](README_en.md) | 简体中文
 
-**update: Mình cập nhật source code mô hình top 1 tại cuộc thi và pretrain tại [bitbucket](https://bitbucket.org/pbcquoc/ocr/src/master/)**
+<p align="center">
+ <img src="https://github.com/PaddlePaddle/PaddleOCR/releases/download/v2.8.0/PaddleOCR_logo.png" align="middle" width = "600"/>
+<p align="center">
+<p align="center">
+    <a href="https://discord.gg/z9xaRVjdbD"><img src="https://img.shields.io/badge/Chat-on%20discord-7289da.svg?sanitize=true" alt="Chat"></a>
+    <a href="./LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-dfd.svg"></a>
+    <a href="https://github.com/PaddlePaddle/PaddleOCR/releases"><img src="https://img.shields.io/github/v/release/PaddlePaddle/PaddleOCR?color=ffa"></a>
+    <a href=""><img src="https://img.shields.io/badge/python-3.7+-aff.svg"></a>
+    <a href=""><img src="https://img.shields.io/badge/os-linux%2C%20win%2C%20mac-pink.svg"></a>
+    <a href="https://pypi.org/project/PaddleOCR/"><img src="https://img.shields.io/pypi/dm/PaddleOCR?color=9cf"></a>
+    <a href="https://github.com/PaddlePaddle/PaddleOCR/stargazers"><img src="https://img.shields.io/github/stars/PaddlePaddle/PaddleOCR?color=ccf"></a>
+</p>
 
-# Dataset
-Các bạn download dataset của BTC tại [đây](https://drive.google.com/drive/folders/1Qa2YA6w6V5MaNV-qxqhsHHoYFRK5JB39) nhé. 
+## 简介
 
-# Preprocess
-Tiền xử lý là cực kì quan trọng đối với bài toàn này. Một trong những cách mà các bạn có thể thử:
-- Binary bản scan
-- Remove white border 
-# Model
-Một trong những kiến trức cơ bản hay dùng cho bài toán OCR là CRNN + CTCLoss. CNN được dùng để extract features từ ảnh. sau đó các feature maps trở thành input đầu vào cho mạng RNN. mỗi feature map sẽ tương ứng với một timestep của mạng RNN. Sau đó dùng CTCLoss để tính loss tại một thời điểm và cập nhật lại trọng số cho cả mô hình.
-CNN, RNN thì các bạn đã quen thuộc. Trong bài này mình thấy điểm thú vị làm hàm CTCloss, hàm này giúp tính loss hiện tại của mô hình mà không thông tin về align của những kí tự trong ảnh. Chi tiết về CTCloss bạn có thể tìm hiểu tại [đây](https://distill.pub/2017/ctc/)
-![Model](img/model.png)
-# Train
-Model hình của mình dùng vgg16 và Bidirection LSTM, có tổng 20m tham số, nên quá trình train để hạn chết overfit là cực kì quan trọng. Đầu tiên, các bạn cần fix CNN, chỉ train LSTM, sau đó thì train cả mô hình với learning rate nhỏ hơn. Mình train khoảng 60 epochs cho LSTM với lr=0.001, và 30 epochs tiết theo để finetune với lr=0.00001
+PaddleOCR 旨在打造一套丰富、领先、且实用的 OCR 工具库，助力开发者训练出更好的模型，并应用落地。
 
-Các bạn gõ câu lệnh sau để train:
-```python
-python crnn.py --train {thư mục chứa ảnh} --label {nhãn.json}
-```
-Các bạn gõ câu lệnh sau để predict:
-```python
-python predict.py --model {thư mực chứa kfold model} --data {thư mục chứa ảnh cần predict}
-```
+<div align="center">
+    <img src="https://github.com/PaddlePaddle/PaddleOCR/releases/download/v2.8.0/demo.gif" width="800">
+</div>
 
-# Result
-Kết quả mình sau khi train 60 epochs + 31 epochs cho finetune. Mình tính editdistance trên tập valid 1/5 training size thì được normalize editdistance khoảng 0.28x
-![Result](img/result.jpg)
-Chi tiết mô hình các bạn có thể đọc tại [blog](https://pbcquoc.github.io/vietnamese-ocr/) của mình nhé. 
-# Any Problems?
-Nếu bạn có vấn đề gì thì liên hệ với mình qua gmail pbcquoc@gmail.com. 
+## 🚀 社区
+
+PaddleOCR 由 [PMC](https://github.com/PaddlePaddle/PaddleOCR/issues/12122) 监督。Issues 和 PRs 将在尽力的基础上进行审查。欲了解 PaddlePaddle 社区的完整概况，请访问 [community](https://github.com/PaddlePaddle/community)。
+
+⚠️注意：[Issues](https://github.com/PaddlePaddle/PaddleOCR/issues)模块仅用来报告程序🐞Bug，其余提问请移步[Discussions](https://github.com/PaddlePaddle/PaddleOCR/discussions)模块提问。如所提Issue不是Bug，会被移到Discussions模块，敬请谅解。
+
+## 📣 近期更新([more](https://paddlepaddle.github.io/PaddleOCR/update.html))
+
+- **🔥2024.7 添加 PaddleOCR 算法模型挑战赛冠军方案**：
+    - 赛题一：OCR 端到端识别任务冠军方案——[场景文本识别算法-SVTRv2](https://paddlepaddle.github.io/PaddleOCR/algorithm/text_recognition/algorithm_rec_svtrv2.html)；
+    - 赛题二：通用表格识别任务冠军方案——[表格识别算法-SLANet-LCNetV2](https://paddlepaddle.github.io/PaddleOCR/algorithm/table_recognition/algorithm_table_slanet.html)。
+
+- **💥2024.6.27 飞桨低代码开发工具 [PaddleX 3.0](https://github.com/paddlepaddle/paddlex) 重磅更新！**
+    - 低代码开发范式：支持 OCR 模型全流程低代码开发，提供 Python API，支持用户自定义串联模型；
+    - 多硬件训推支持：支持英伟达 GPU、昆仑芯、昇腾和寒武纪等多种硬件进行模型训练与推理。PaddleOCR支持的模型见 [模型列表](doc/doc_ch/hardware/supported_models.md)
+
+## 📚文档
+
+完整文档请移步：[docs](https://paddlepaddle.github.io/PaddleOCR/)
+
+## 🌟 特性
+
+支持多种 OCR 相关前沿算法，在此基础上打造产业级特色模型[PP-OCR](https://paddlepaddle.github.io/PaddleOCR/ppocr/overview.html)、[PP-Structure](https://paddlepaddle.github.io/PaddleOCR/ppstructure/overview.html)和[PP-ChatOCRv2](https://aistudio.baidu.com/community/app/70303)，并打通数据生产、模型训练、压缩、预测部署全流程。
+
+<div align="center">
+    <img src="./docs/images/ppocrv4.png">
+</div>
+
+## ⚡ [快速开始](https://paddlepaddle.github.io/PaddleOCR/quick_start.html)
+
+## 📚《动手学 OCR》电子书
+
+- [《动手学 OCR》电子书](https://paddlepaddle.github.io/PaddleOCR/ppocr/blog/ocr_book.html)
+
+## 🎖 贡献者
+
+<a href="https://github.com/PaddlePaddle/PaddleOCR/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=PaddlePaddle/PaddleOCR&max=400&columns=20"  width="800"/>
+</a>
+
+## ⭐️ Star
+
+[![Star History Chart](https://api.star-history.com/svg?repos=PaddlePaddle/PaddleOCR&type=Date)](https://star-history.com/#PaddlePaddle/PaddleOCR&Date)
+
+## 许可证书
+
+本项目的发布受 [Apache License Version 2.0](./LICENSE) 许可认证。
